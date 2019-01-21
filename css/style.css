@@ -2,41 +2,98 @@ body {
   display: block;
   margin: auto;
   text-align: center;
-  background-color: #f7f7f7;
+  /* background-color: #e7e7e7; */
 }
 
 header {
-  border: 2px solid yellow;
+  /* border: 2px solid yellow; */
+  font-family: "Poiret One", cursive;
+  font-size: 50px;
+  color: #867979;
   display: block;
   text-align: center;
-  margin: 30px 350px 30px;
-  width: 525px;
+  margin: auto;
+  margin-top: 20px;
+  padding: 1%;
+  width: 605px;
 }
 
 section {
-  border: 2px solid red;
+  /* border: 2px solid white; */
+  border: 3px solid #c0a594;
+
   display: block;
   margin: auto;
   text-align: center;
-  background-image: url("../images/background2.jpg");
+  background-image: url("../images/background.jpg");
   background-repeat: no-repeat;
-  height: 650px;
-  width: 525px;
+  height: 615px;
+  width: 550px;
+  border-radius: 10px;
 }
 
 .scoreboard {
   display: block;
-  margin-top: 558px;
+  background-color: white;
+  opacity: 0.8;
+  margin: auto;
+  margin-top: 555px;
+  border-radius: 10px;
   text-align: center;
-  width: 525px;
-  height: 92px;
-  border: 2px solid green;
+  width: 520px;
+  height: 50px;
+  color: #867979;
+  font-family: "Abel", sans-serif;
+
+  /* border: 2px solid green; */
 }
 
 footer {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
+  font-family: "Abel", sans-serif;
+  color: #867979;
   display: block;
-  margin: 25px 25px 25px 900px;
+  margin: 25px 25px 25px 1000px;
   text-align: center;
   width: 300px;
+}
+
+.popup-welcome {
+  width: 600x;
+  height: 400px;
+  position: fixed;
+  background-color: white;
+  opacity: 0.9;
+  color: #867979;
+  border: 3px solid #c0a594;
+  border-radius: 10px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+  padding: 30px;
+  font-family: "Abel", sans-serif;
+}
+
+.popup-end {
+  position: fixed;
+  background-color: white;
+  width: 100% !IMPORTANT;
+  max-width: 600px;
+  opacity: 0.9;
+  color: #867979;
+  border: 3px solid #c0a594;
+  border-radius: 10px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+  padding: 30px;
+  font-family: "Abel", sans-serif;
+}
+
+.my-game {
+  border: 2px solid green;
 }
