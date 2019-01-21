@@ -1,0 +1,42 @@
+body {
+  display: block;
+  margin: auto;
+  text-align: center;
+  background-color: #f7f7f7;
+}
+
+header {
+  border: 2px solid yellow;
+  display: block;
+  text-align: center;
+  margin: 30px 350px 30px;
+  width: 525px;
+}
+
+section {
+  border: 2px solid red;
+  display: block;
+  margin: auto;
+  text-align: center;
+  background-image: url("../images/background2.jpg");
+  background-repeat: no-repeat;
+  height: 650px;
+  width: 525px;
+}
+
+.scoreboard {
+  display: block;
+  margin-top: 558px;
+  text-align: center;
+  width: 525px;
+  height: 92px;
+  border: 2px solid green;
+}
+
+footer {
+  border: 2px solid blue;
+  display: block;
+  margin: 25px 25px 25px 900px;
+  text-align: center;
+  width: 300px;
+}
