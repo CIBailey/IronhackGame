@@ -19,8 +19,8 @@ header {
 }
 
 section {
-  /* border: 2px solid white; 
-  border: 3px solid #c0a594; */
+  border: 2px solid white;
+  border: 3px solid #c0a594;
   display: block;
   margin: auto;
   text-align: center;
@@ -93,7 +93,7 @@ footer {
 }
 
 .my-game {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   display: block;
   margin: auto;
   text-align: center;

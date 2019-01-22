@@ -1,12 +1,11 @@
-// //Select Body and Click
-// var start = document.querySelector("body");
-// start.addEventListener("click", startFunction);
-// // Event on click
-// function startFunction() {
-//   console.log("click");
-//   var popup = document.querySelector(".popup-welcome");
-//   popup.style.visibility = "hidden";
-// }
+//Select Body and Click
+var start = document.querySelector("body");
+start.addEventListener("click", startFunction);
+// Event on click
+function startFunction() {
+  var popup = document.querySelector(".popup-welcome");
+  popup.style.visibility = "hidden";
+}
 
 ///---------------------- CANVAS -------------
 
@@ -14,29 +13,33 @@ var canvas = document.querySelector(".my-game");
 var ctx = canvas.getContext("2d");
 
 // sourcing image
-var basket = new Image();
-basket.src = "./images/baguette.png";
-
-console.log(basket);
+var basketImg = new Image();
+basketImg.src = "./images/basket.png";
 
 var basket = {
   x: 259,
-  y: 485,
-  width: 50,
-  height: 50,
+  y: 200,
+  width: 75,
+  height: 53,
   // when item is caught, basket turns white
   isCaught: false
 };
 
-var basketHeight = 50;
-var basketWidth = 50;
+var basketHeight = 53;
+var basketWidth = 75;
 var basketX = (canvas.width - basketWidth) / 2;
 
 function drawBasket() {
-  // ctx.beginPath();
-  ctx.drawImage(basket, 259, 485, basketHeight, basketWidth);
-  // ctx.closePath();
+  ctx.drawImage(basketImg, basketX, 500, basketWidth, basketHeight);
 }
+
+///// animate in Canvas
+// function basketBounce() {
+//   basketMove = basketWidth + 10;
+//   basketWidth = basketMove;
+//   basketMove = basketWidth - 10;
+//   setInterval((basketWidth = basketMove), 10);
+// }
 
 // when the page loads, the basket will show up
 basket.onload = function() {
@@ -47,9 +50,7 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
 
 function mouseMoveHandler(e) {
   var relativeX = e.clientX - canvas.offsetLeft;
-  console.log(relativeX);
   if (relativeX > 0 && relativeX < canvas.width) {
-    console.log(basket);
     basketX = relativeX - basketWidth / 2;
   }
 }
@@ -85,8 +86,8 @@ class Pastry {
 
   drawPastry() {
     if (!basket.isCaught) {
-      // continue to move only if Céline hasn't crashed
-      this.y += 10;
+      // continue to move only if basket didn't catch
+      this.y += 7;
       if (this.y > 600) {
         this.y = -5;
       }
@@ -95,6 +96,7 @@ class Pastry {
     if (this.isCaught) {
       // color the pipe red if it's crashed
       ctx.fillStyle = "white";
+      //// counts number of times this happens
     }
     // draw a solid rectangle for this pipe
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -103,10 +105,34 @@ class Pastry {
 
 var allPastry = [
   // x, y, width, height
-  new Pastry(painauchoc, 5, -3, 50, 50),
-  new Pastry(pie, 10, -5, 50, 50),
-  new Pastry(tarte, 10, -7, 50, 50),
-  new Pastry(croissant, -15, 300, 50, 50)
+  new Pastry(
+    painauchoc,
+    Math.floor(Math.random() * 400) + 5,
+    Math.floor(Math.random() * -495),
+    50,
+    50
+  ),
+  new Pastry(
+    pie,
+    Math.floor(Math.random() * 400) + 5,
+    Math.floor(Math.random() * -495),
+    50,
+    50
+  ),
+  new Pastry(
+    tarte,
+    Math.floor(Math.random() * 400) + 5,
+    Math.floor(Math.random() * -495),
+    50,
+    50
+  ),
+  new Pastry(
+    croissant,
+    Math.floor(Math.random() * 400) + 5,
+    Math.floor(Math.random() * -495),
+    50,
+    50
+  )
 ];
 
 // Drawing Loop
@@ -118,18 +144,43 @@ function drawingLoop() {
   // erase the whole canvas before drawing (x, y, width, height)
   ctx.clearRect(0, 0, 518, 546);
 
-  // drawBasket();
+  drawBasket();
   allPastry.forEach(function(onePastry) {
     onePastry.drawPastry();
   });
-
+  /////////// Draws Basket Catches
+  checkCatch();
   if (basket.isCaught) {
-    // draw game over screen
+    // function using Jquery to enlarge basket
+    // basketBounce();
+    $("div").animate({ width: "90px", height: "67px" });
+    $("div").animate({ width: "75px", height: "53px" });
   }
 
   // ask the browser for a chance to re-draw the scene
   requestAnimationFrame(function() {
     // set up a recursive loop (the function "drawingLoop" calls itself)
     drawingLoop();
+  });
+}
+
+/////// Basket Catching
+
+function basketCatching(rectA, rectB) {
+  return (
+    rectA.y + rectA.height >= rectB.y &&
+    rectA.y <= rectB.y + rectB.height &&
+    rectA.x + rectA.width >= rectB.x &&
+    rectA.x <= rectB.x + rectB.width
+  );
+}
+
+function checkCatch() {
+  allPastry.forEach(function(onePastry) {
+    if (basketCatching(basket, onePastry)) {
+      basket.isCaught = true;
+      onePastry.isCaught = true;
+      console.log(basket);
+    }
   });
 }
