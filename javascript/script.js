@@ -18,28 +18,17 @@ basketImg.src = "./images/basket.png";
 
 var basket = {
   x: 259,
-  y: 200,
+  y: 500,
   width: 75,
   height: 53,
   // when item is caught, basket turns white
   isCaught: false
 };
-
-var basketHeight = 53;
-var basketWidth = 75;
-var basketX = (canvas.width - basketWidth) / 2;
+var basketStartingSpot = (canvas.width - basket.width) / 2;
 
 function drawBasket() {
-  ctx.drawImage(basketImg, basketX, 500, basketWidth, basketHeight);
+  ctx.drawImage(basketImg, basket.x, basket.y, basket.width, basket.height);
 }
-
-///// animate in Canvas
-// function basketBounce() {
-//   basketMove = basketWidth + 10;
-//   basketWidth = basketMove;
-//   basketMove = basketWidth - 10;
-//   setInterval((basketWidth = basketMove), 10);
-// }
 
 // when the page loads, the basket will show up
 basket.onload = function() {
@@ -51,7 +40,7 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
 function mouseMoveHandler(e) {
   var relativeX = e.clientX - canvas.offsetLeft;
   if (relativeX > 0 && relativeX < canvas.width) {
-    basketX = relativeX - basketWidth / 2;
+    basketStartingSpot = relativeX - basket.width / 2;
   }
 }
 
