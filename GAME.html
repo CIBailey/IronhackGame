@@ -24,8 +24,8 @@
     <section>
       <canvas class="my-game" width="518px" height="546px"></canvas>
       <div class="scoreboard">
-        <item class="points"><b>Points:</b></item>
-        <item class="catch"><b>Pastries Caught:</b></item>
+        <div>Time Left:&nbsp; <item id="countdown">5</item></div>
+        <div>Pastries Caught:&nbsp; <item class="catch">0</item></div>
       </div>
     </section>
 
@@ -47,18 +47,17 @@
       </div>
     </div>
 
-    <!-- <div class="popup-end">
+    <div class="popup-end">
       <img src="./images/painauchocolate icon.png" />&nbsp;&nbsp;
       <font size="8">Game Over</font>&nbsp;&nbsp;
       <img src="./images/croissant icon.png" /><br />
       <font size="6">
-        #0 pastries were caught<br />
-        for a total of #0 points!<br />
+        <item class="catch">0</item> pastries were caught!<br />
       </font>
       <font size="6"
         ><button type="button" class="btn btn-light">J'en veux plus!</button>
       </font>
-    </div> -->
+    </div>
 
     <footer>
       Created By Christina Bailey &nbsp;&nbsp;<a

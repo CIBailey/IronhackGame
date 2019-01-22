@@ -1,10 +1,27 @@
+var popup = document.querySelector(".popup-end");
+popup.style.visibility = "hidden";
+
 //Select Body and Click
 var start = document.querySelector("body");
 start.addEventListener("click", startFunction);
 // Event on click
+
 function startFunction() {
   var popup = document.querySelector(".popup-welcome");
   popup.style.visibility = "hidden";
+  //////// countdown
+  var seconds = document.getElementById("countdown").textContent;
+  var countdown = setInterval(function() {
+    seconds--;
+    document.getElementById("countdown").textContent = seconds;
+    if (seconds <= 0) {
+      ////// events triggered to end the game!
+      clearInterval(countdown);
+      console.log("hi");
+      var popup = document.querySelector(".popup-end");
+      popup.style.visibility = "visible";
+    }
+  }, 1000);
 }
 
 ///---------------------- CANVAS -------------
@@ -20,11 +37,10 @@ var basket = {
   x: 259,
   y: 500,
   width: 75,
-  height: 53,
+  height: 40,
   // when item is caught, basket turns white
   isCaught: false
 };
-var basketStartingSpot = (canvas.width - basket.width) / 2;
 
 function drawBasket() {
   ctx.drawImage(basketImg, basket.x, basket.y, basket.width, basket.height);
@@ -40,7 +56,7 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
 function mouseMoveHandler(e) {
   var relativeX = e.clientX - canvas.offsetLeft;
   if (relativeX > 0 && relativeX < canvas.width) {
-    basketStartingSpot = relativeX - basket.width / 2;
+    basket.x = relativeX - basket.width / 2;
   }
 }
 
@@ -74,20 +90,18 @@ class Pastry {
   }
 
   drawPastry() {
-    if (!basket.isCaught) {
-      // continue to move only if basket didn't catch
-      this.y += 7;
-      if (this.y > 600) {
-        this.y = -5;
-      }
+    this.y += 7;
+    if (this.y > 600) {
+      this.y = -5;
     }
 
-    if (this.isCaught) {
-      // color the pipe red if it's crashed
-      ctx.fillStyle = "white";
-      //// counts number of times this happens
-    }
-    // draw a solid rectangle for this pipe
+    // if (this.isCaught) {
+    //   // color the pipe red if it's crashed
+    //   ctx.fillStyle = "white";
+    //   //// counts number of times this happens
+    // }
+
+    // draws the pastrys
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
@@ -140,10 +154,7 @@ function drawingLoop() {
   /////////// Draws Basket Catches
   checkCatch();
   if (basket.isCaught) {
-    // function using Jquery to enlarge basket
-    // basketBounce();
-    $("div").animate({ width: "90px", height: "67px" });
-    $("div").animate({ width: "75px", height: "53px" });
+    // code here as a reaction to basket contact
   }
 
   // ask the browser for a chance to re-draw the scene
@@ -169,7 +180,6 @@ function checkCatch() {
     if (basketCatching(basket, onePastry)) {
       basket.isCaught = true;
       onePastry.isCaught = true;
-      console.log(basket);
     }
   });
 }
