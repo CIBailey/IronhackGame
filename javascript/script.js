@@ -1,6 +1,8 @@
 var popup = document.querySelector(".popup-end");
 popup.style.visibility = "hidden";
 
+var isGameOver = false;
+
 //Select Body and Click
 var start = document.querySelector("body");
 start.addEventListener("click", startFunction);
@@ -19,6 +21,7 @@ function startFunction() {
       clearInterval(countdown);
       var popup = document.querySelector(".popup-end");
       popup.style.visibility = "visible";
+      isGameOver = true;
     }
   }, 1000);
 }
@@ -49,10 +52,20 @@ var basket = {
   width: 75,
   height: 40,
   // when item is caught, basket turns white
-  isCaught: false
+  isCaught: false,
+  growth: 0
 };
 
 function drawBasket() {
+  basket.width += basket.growth;
+  basket.height += basket.growth;
+
+  if (basket.width >= 80) {
+    basket.growth = -0.5;
+  } else if (basket.width <= 75) {
+    basket.growth = 0;
+  }
+
   ctx.drawImage(basketImg, basket.x, basket.y, basket.width, basket.height);
 }
 
@@ -103,14 +116,6 @@ class Pastry {
     this.y += 4;
     if (this.y > 600) {
       this.y = -5;
-    }
-
-    if (this.isCaught) {
-      score.innerHTML = Number(score.innerHTML) + 1;
-      console.log(score.innerHTML);
-      finalscore.innerHTML = score.innerHTML;
-
-      this.isCaught = true;
     }
 
     // draws the pastrys
@@ -216,11 +221,37 @@ function drawingLoop() {
   }
 
   function checkCatch() {
+    var pastriesToAdd = [];
+
     allPastry.forEach(function(onePastry) {
       if (basketCatching(basket, onePastry)) {
+        basket.growth = 0.5;
         basket.isCaught = true;
         onePastry.isCaught = true;
+        pastriesToAdd.push(onePastry);
+
+        if (!isGameOver) {
+          score.innerHTML = Number(score.innerHTML) + 1;
+          finalscore.innerHTML = score.innerHTML;
+        }
       }
+    });
+
+    ///// disappearing pastry
+    allPastry = allPastry.filter(onePastry => {
+      return !onePastry.isCaught; //Caught letters now have a true value.
+    });
+
+    pastriesToAdd.forEach(function(onePastry) {
+      allPastry.push(
+        new Pastry(
+          onePastry.image,
+          Math.floor(Math.random() * 400) + 5,
+          Math.floor(Math.random() * -495),
+          50,
+          50
+        )
+      ); // A new letter is pushed inside allPastry array so it's never empty.
     });
   }
 
@@ -228,47 +259,14 @@ function drawingLoop() {
 
   allPastry.forEach(onePastry => {
     onePastry.drawPastry();
-    if (!onePastry.isCaught && checkCatch(basket, onePastry)) {
-      //If the letter has a false value (set by default), and the colission is true,
-      // then its value becomes true so the score only gains 1pt. Otherwise,
-      //the score would evolve during all the contact duration between santa and the letter.
-      onePastry.isCaught = true;
-
-      //////basket animation here
-      //
-      //
-      //
-      //
-      // ///////////////////
-
-      allPastry.push(
-        new Pastry(
-          tarte,
-          Math.floor(Math.random() * 400) + 5,
-          Math.floor(Math.random() * -495),
-          50,
-          50
-        )
-      ); // A new letter is pushed inside allPastry array so it's never empty.
-    }
   });
 
-  ///// disappearing pastry
+  checkCatch();
 
-  allPastry = allPastry.filter(onePastry => {
-    return !onePastry.isCaught; //Caught letters now have a true value.
-  });
   //////--- end drawing loop below
 }
 
 function growBasket() {
-  for (basket.width, basket.height; basket.width <= 85; basket.width++) {
-    basket.width++;
-    basket.height++;
-    if ((basket.width = 85)) {
-      //When basket width gets to full size, it will start decreasing
-      basket.width -= 1;
-      basket.height -= 1;
-    }
-  }
+  basket.width += 10;
+  basket.height += 10;
 }
