@@ -38,7 +38,7 @@ restart.onclick = function() {
 };
 
 ///////// audio files
-var itemIn = new Audio("./sound/body_hits.wav");
+var itemIn = new Audio("./sound/beep-00.wav");
 
 ///---------------------- CANVAS -------------
 
@@ -227,7 +227,7 @@ function drawingLoop() {
           //After 1 second, stops playing . Otherwise, it would be an endless loop by efault.
           itemIn.pause();
           itemIn.currentTime = 0;
-        }, 1000);
+        }, 400);
 
         if (!isGameOver) {
           score.innerHTML = Number(score.innerHTML) + 1;

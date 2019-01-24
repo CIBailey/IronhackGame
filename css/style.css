@@ -2,7 +2,7 @@ body {
   display: block;
   margin: auto;
   text-align: center;
-  /* background-color: #e7e7e7; */
+  background-color: #e2d2c7;
 }
 
 header {
@@ -36,14 +36,16 @@ section {
   align-items: center;
   justify-content: space-between;
   padding-right: 50px;
-  padding-left: 50px;
+  padding-left: 55px;
   background-color: white;
   opacity: 0.8;
   margin: auto;
   width: 518;
-  height: 50px;
-  color: #867979;
+  height: 47px;
+  color: #696060;
   font-family: "Abel", sans-serif;
+  font-size: 20px;
+  border-radius: 10px;
   /* border: 2px solid blue; */
 }
 
