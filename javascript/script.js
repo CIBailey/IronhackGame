@@ -37,6 +37,9 @@ restart.onclick = function() {
   document.location.reload();
 };
 
+///////// audio files
+var itemIn = new Audio("./sound/body_hits.wav");
+
 ///---------------------- CANVAS -------------
 
 var canvas = document.querySelector(".my-game");
@@ -57,6 +60,7 @@ var basket = {
 };
 
 function drawBasket() {
+  /////basket animation event
   basket.width += basket.growth;
   basket.height += basket.growth;
 
@@ -101,15 +105,26 @@ painauchoc.src = "./images/painauchocolate.png";
 var tarte = new Image();
 tarte.src = "./images/tarte.png";
 
+var rand = function(a, b) {
+  return ~~(Math.random() * (b - a + 1) + a);
+};
+
 class Pastry {
-  constructor(pastryImage, pastryX, pastryY, pastryWidth, pastryHeight) {
+  constructor(
+    pastryImage,
+    pastryX,
+    pastryY,
+    pastryWidth,
+    pastryHeight,
+    pastryRotate
+  ) {
     this.image = pastryImage;
     this.x = pastryX;
     this.y = pastryY;
     this.width = pastryWidth;
     this.height = pastryHeight;
-    // when a pastry goes into the basket, basket will turn white
     this.isCaught = false;
+    this.Rotate = pastryRotate;
   }
 
   drawPastry() {
@@ -118,6 +133,10 @@ class Pastry {
       this.y = -5;
     }
 
+    ////////////// Abi Here ////////////
+    ///pastry rotation function
+    // ctx.rotate((50 * Math.PI) / 180);
+
     // draws the pastrys
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
@@ -125,34 +144,6 @@ class Pastry {
 
 var allPastry = [
   // x, y, width, height
-  new Pastry(
-    painauchoc,
-    Math.floor(Math.random() * 400) + 5,
-    Math.floor(Math.random() * -495),
-    50,
-    50
-  ),
-  new Pastry(
-    pie,
-    Math.floor(Math.random() * 400) + 5,
-    Math.floor(Math.random() * -495),
-    50,
-    50
-  ),
-  new Pastry(
-    tarte,
-    Math.floor(Math.random() * 400) + 5,
-    Math.floor(Math.random() * -495),
-    50,
-    50
-  ),
-  new Pastry(
-    croissant,
-    Math.floor(Math.random() * 400) + 5,
-    Math.floor(Math.random() * -495),
-    50,
-    50
-  ),
   new Pastry(
     painauchoc,
     Math.floor(Math.random() * 400) + 5,
@@ -229,6 +220,14 @@ function drawingLoop() {
         basket.isCaught = true;
         onePastry.isCaught = true;
         pastriesToAdd.push(onePastry);
+
+        ///// sound
+        itemIn.play();
+        setTimeout(function() {
+          //After 1 second, stops playing . Otherwise, it would be an endless loop by efault.
+          itemIn.pause();
+          itemIn.currentTime = 0;
+        }, 1000);
 
         if (!isGameOver) {
           score.innerHTML = Number(score.innerHTML) + 1;
