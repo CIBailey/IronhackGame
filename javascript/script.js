@@ -48,8 +48,8 @@ restart.onclick = function() {
 };
 
 ///////// audio files
-var itemIn = new Audio("./sound/beep-00.wav");
-var finish = new Audio("./sound/Isabelle.mp3");
+var itemIn = new Audio("./audio/beep-00.wav");
+var finish = new Audio("./audio/isabelle.mp3");
 
 ///---------------------- CANVAS -------------
 
