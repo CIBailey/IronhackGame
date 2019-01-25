@@ -20,12 +20,18 @@ function startFunction() {
     seconds--;
     document.getElementById("countdown").textContent = seconds;
     if (seconds <= 0) {
-      ////// events triggered to end the game!
+      /////////////////////////////// events triggered to end the game!
       clearInterval(countdown);
       var popup = document.querySelector(".popup-end");
       popup.style.visibility = "visible";
       isGameOver = true;
       itemIn.src = "";
+      finish.play();
+      setTimeout(function() {
+        //After 1 second, stops playing . Otherwise, it would be an endless loop by efault.
+        itemIn.pause();
+        itemIn.currentTime = 0;
+      }, 50000);
     }
   }, 1000);
 }
@@ -43,6 +49,7 @@ restart.onclick = function() {
 
 ///////// audio files
 var itemIn = new Audio("./sound/beep-00.wav");
+var finish = new Audio("./sound/Isabelle.mp3");
 
 ///---------------------- CANVAS -------------
 
