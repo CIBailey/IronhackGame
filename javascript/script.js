@@ -11,6 +11,9 @@ start.addEventListener("click", startFunction);
 function startFunction() {
   var popup = document.querySelector(".popup-welcome");
   popup.style.visibility = "hidden";
+  /////////
+  drawingLoop();
+
   //////// countdown
   var seconds = document.getElementById("countdown").textContent;
   var countdown = setInterval(function() {
@@ -22,6 +25,7 @@ function startFunction() {
       var popup = document.querySelector(".popup-end");
       popup.style.visibility = "visible";
       isGameOver = true;
+      itemIn.src = "";
     }
   }, 1000);
 }
@@ -175,10 +179,8 @@ var allPastry = [
 ];
 //////// Create Basket Animation
 
-// Drawing Loop
-// -----------------------------------------------------------------------------
+// -------------------------- Drawing Loop  ---------------------------------------------------
 // call "drawingLoop" for the first time to begin the loop
-drawingLoop();
 
 function drawingLoop() {
   // erase the whole canvas before drawing (x, y, width, height)
@@ -190,9 +192,6 @@ function drawingLoop() {
   });
   /////// Draws Basket Catches
   checkCatch();
-  if (basket.isCaught) {
-    // code here as a reaction to basket contact
-  }
 
   // ask the browser for a chance to re-draw the scene
   requestAnimationFrame(function() {
@@ -259,9 +258,6 @@ function drawingLoop() {
   allPastry.forEach(onePastry => {
     onePastry.drawPastry();
   });
-
-  checkCatch();
-
   //////--- end drawing loop below
 }
 
